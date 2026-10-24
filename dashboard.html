@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232f7df6'/%3E%3Cstop offset='1' stop-color='%233a9a96'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15' fill='url(%23g)'/%3E%3C/svg%3E"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Odido Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Odido — design system
+   Odido: wit + kleuren uit het logo, Bricolage Grotesque for headlines, Figtree for text */
+:root{
+  --ink:#1b1740;--green:#6a5cff;--green-d:#4c3fdb;--mint:#f0eeff;--paper:#faf9ff;--card:#fff;
+  --line:#e6e3f5;--muted:#67647f;--sun:#ffc15e;--red:#b3261e;
+  --display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --pad:max(20px,calc((100% - 1200px)/2));
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.5 var(--body);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;line-height:1.1;margin:0}
+a{color:inherit}
+button,input,select{font:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.ico{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* Logo */
+.logo,.trade-logo,.dashboard-logo,.login-logo{display:inline-flex;align-items:center;text-decoration:none}
+.odido-logo{display:block;height:40px;width:auto}
+
+/* Buttons */
+.btn,button.primary,.dashboard-primary,.order-search button{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#3b82f6 0%,#7467ff 55%,#b58aef 100%);color:#fff;font-weight:700;border:0;border-radius:999px;padding:14px 24px;text-decoration:none;cursor:pointer;transition:filter .15s,transform .15s}
+.btn:hover,button.primary:hover,.dashboard-primary:hover,.order-search button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* ---------- Home ---------- */
+.utility-bar{background:var(--mint);color:var(--muted);border-bottom:1px solid var(--line);font-size:13px;font-weight:500;display:flex;justify-content:space-between;gap:20px;padding:9px var(--pad)}
+.utility-left,.utility-right{display:flex;gap:26px;align-items:center;white-space:nowrap}
+.utility-left span{display:inline-flex;align-items:center;gap:7px}
+.utility-left .ico{color:var(--green)}
+.site-header{background:#fff;display:grid;grid-template-columns:1fr minmax(260px,460px) 1fr;gap:24px;align-items:center;padding:16px var(--pad)}
+.search,.model-search{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:0 18px;height:46px;color:var(--muted)}
+.search:focus-within,.model-search:focus-within{border-color:var(--green);background:#fff;box-shadow:0 0 0 4px rgba(106,92,255,.14)}
+.search input,.model-search input{border:0;outline:0;background:none;width:100%;font-size:15px;color:var(--ink)}
+.header-icons{display:flex;justify-content:flex-end;gap:8px}
+.header-icons a{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;font-size:22px}
+.header-icons a:hover{background:var(--mint)}
+.nav-bar{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:30px;padding:0 var(--pad);font-weight:600;font-size:15px}
+.nav-bar a{text-decoration:none;color:var(--muted);padding:14px 0;border-bottom:3px solid transparent}
+.nav-bar a:hover{color:var(--ink)}
+.nav-bar .active{color:var(--ink);border-bottom-color:var(--green)}
+.nav-bar .sell-link{margin-left:auto;background:var(--ink);color:#fff;padding:9px 18px;border-radius:999px;border:0}
+.nav-bar .sell-link:hover{background:var(--green-d);color:#fff}
+
+.home-main{padding:32px var(--pad) 80px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;border-radius:28px;padding:60px 64px;color:var(--ink);overflow:hidden;border:1px solid var(--line);
+  background:radial-gradient(45% 85% at 6% 8%,rgba(47,125,246,.20),transparent 70%),radial-gradient(40% 70% at 52% 105%,rgba(255,179,71,.30),transparent 70%),radial-gradient(45% 90% at 100% 0%,rgba(255,143,168,.32),transparent 65%),#fff}
+.hero h1{font-size:clamp(34px,5vw,60px);font-weight:800;color:var(--ink);letter-spacing:-.035em}
+.hero p{color:var(--muted);font-size:18px;max-width:44ch;margin:18px 0 28px}
+.hero-points{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:26px;color:var(--muted);font-size:14px;font-weight:600}
+.hero-points span{display:inline-flex;align-items:center;gap:7px}
+.hero-points .ico{color:var(--green)}
+.quote{background:#fff;color:var(--ink);border-radius:22px;padding:28px;width:100%;max-width:350px;justify-self:center;transform:rotate(2.5deg);box-shadow:0 36px 60px -24px rgba(90,70,200,.28)}
+.quote small{color:var(--muted);font-weight:600;font-size:14px}
+.quote b{display:block;font-family:var(--display);font-size:20px;margin-top:2px}
+.quote-price{font:800 54px/1 var(--display);letter-spacing:-.04em;margin:18px 0 16px;background:linear-gradient(transparent 66%,var(--sun) 0);display:inline-block}
+.quote dl{margin:0}
+.quote dl div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px dashed var(--line);font-size:14px}
+.quote dt{color:var(--muted)}.quote dd{margin:0;font-weight:700;text-align:right}
+
+.model-section{padding-top:64px}
+.model-section h2{font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.section-sub{color:var(--muted);font-size:18px;margin:8px 0 24px}
+.model-search{max-width:520px;margin-bottom:32px;background:#fff}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+.model-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+.model-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 16px 30px -18px rgba(27,23,64,.35)}
+.model-card h3{font-size:19px;font-weight:700;margin-top:14px}
+.model-card p{margin:8px 0 0;align-self:flex-start;background:var(--mint);color:var(--green-d);font-weight:700;font-size:13px;padding:4px 11px;border-radius:999px}
+.phone-photo{height:200px;display:flex;align-items:center;justify-content:center;position:relative}
+.phone-photo img{max-width:100%;max-height:196px;object-fit:contain;mix-blend-mode:multiply}
+.phone-art-fallback{display:none;width:96px;height:176px;border-radius:20px;border:4px solid var(--ink);background:linear-gradient(145deg,#ece9f6,#b3aed0)}
+.phone-photo.photo-fallback .phone-art-fallback{display:block}
+
+.worth{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center;margin-top:96px}
+.worth img{width:100%;height:100%;max-height:480px;object-fit:cover;border-radius:24px}
+.worth h2{font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.factors{list-style:none;margin:0;padding:0}
+.factors li{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+.factors li:last-child{border-bottom:1px solid var(--line)}
+.factors span{color:var(--muted)}
+.fine{color:var(--muted);font-size:14px;margin:16px 0 0}
+.site-footer{background:#fff;border-top:1px solid var(--line);padding:28px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.pay{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:600}
+.pay span{margin-right:8px}
+.pay img{height:30px;width:auto;border-radius:5px;border:1px solid var(--line)}
+
+/* ---------- Inruilflow ---------- */
+.trade-page{min-height:100vh;background:var(--paper)}
+.trade-page .topbar{display:grid;grid-template-columns:1fr auto auto;gap:28px;align-items:center;background:#fff;border-bottom:1px solid var(--line);padding:16px var(--pad)}
+.login-link{font-weight:700;text-decoration:none;font-size:14px}
+.step-label{font-weight:700;color:var(--muted);font-size:14px}
+.progress-wrap{display:flex;align-items:center;gap:14px;padding:22px var(--pad) 0}
+.back{background:#fff;border:1px solid var(--line);width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;color:var(--ink)}
+.back:hover{border-color:var(--green)}
+.progress{flex:1;height:8px;background:#e6e3f5;border-radius:99px;overflow:hidden}
+.progress div{height:100%;background:var(--green);border-radius:99px;transition:width .3s}
+.progress-wrap #stepLabel2{font-weight:700;font-size:14px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:32px;padding:28px var(--pad) 80px;align-items:start}
+.price-card{display:flex;justify-content:space-between;align-items:center;gap:12px;background:linear-gradient(135deg,#2f7df6 0%,#7467ff 62%,#c58af0 100%);color:#eef0ff;border-radius:20px;padding:22px 24px;font-weight:600}
+.price-card strong{font:800 30px var(--display);letter-spacing:-.03em;color:#fff}
+.summary-card,.panel{background:#fff;border:1px solid var(--line);border-radius:20px}
+.summary-card{margin-top:14px;padding:8px 22px;font-size:14px}
+.summary-row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #f0eef9}
+.summary-row:last-child{border:0}
+.summary-row span{color:var(--muted)}.summary-row b{text-align:right}
+.panel{padding:44px;min-height:540px}
+.panel h1{font-size:clamp(26px,3vw,34px);font-weight:800}
+.subtitle{color:var(--muted);font-size:17px;margin:8px 0 26px}
+.info{background:var(--mint);border-left:4px solid var(--green);border-radius:6px 12px 12px 6px;padding:14px 18px;margin:0 0 24px;line-height:1.5;font-size:15px}
+.options{display:flex;flex-direction:column;gap:12px}
+.option{position:relative;display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:14px;padding:17px 20px;cursor:pointer;transition:border-color .15s,background .15s}
+.option:hover{border-color:#b5adff}
+.option::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;border:2px solid #c3bfdc;background:#fff;transition:.15s}
+.option.selected{border-color:var(--green);background:var(--mint)}
+.option.selected::before{border:7px solid var(--green)}
+.option:has(:focus-visible){outline:3px solid var(--green);outline-offset:2px}
+.option input{position:absolute;opacity:0;pointer-events:none}
+.option-title{font-weight:600}
+.option-desc{font-size:13px;color:var(--muted);margin-top:4px}
+button.primary{width:100%;margin-top:26px;font-size:16px;padding:16px}
+.field{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:14px;padding:6px 20px;max-width:240px}
+.field:focus-within{border-color:var(--green);box-shadow:0 0 0 4px rgba(106,92,255,.14)}
+.field input{border:0;outline:0;width:100%;font:800 32px var(--display);padding:8px 0;color:var(--ink)}
+.field span{font:700 22px var(--display);color:var(--muted)}
+.done-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.done{display:flex;justify-content:space-between;align-items:center;background:var(--paper);border-radius:12px;padding:13px 16px;font-weight:600;font-size:15px}
+.done span:first-child:before{content:"✓";display:inline-grid;place-items:center;width:20px;height:20px;background:var(--green);color:#fff;border-radius:50%;font-size:12px;margin-right:10px}
+.done span:last-child{display:none}
+.function-box{border:1.5px solid var(--line);border-radius:18px;padding:24px}
+.function-num{font-size:13px;font-weight:700;color:var(--muted)}
+.function-title{font:700 24px var(--display);margin-top:4px}
+.checks{display:flex;gap:12px;margin-top:20px}
+.checks button{flex:1;border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:15px;border-radius:14px;font-weight:700;font-size:16px;cursor:pointer;transition:.15s}
+.checks button:hover{border-color:var(--green);background:var(--mint)}
+.function-info code{display:inline-block;background:#fff;border:1px solid #d9d4f5;border-radius:8px;padding:5px 12px;font-weight:700}
+.result{text-align:center}
+.result-phone{height:190px;display:flex;justify-content:center;align-items:center}
+.result-phone .phone-photo{height:190px}
+.result h1{margin-top:8px}
+.result-model{color:var(--muted);margin:6px 0 4px}
+.result .big{font:800 clamp(56px,9vw,84px)/1 var(--display);letter-spacing:-.05em;margin:12px 0 18px;display:inline-block;background:linear-gradient(transparent 68%,var(--sun) 0)}
+.result .info{display:inline-block;text-align:left}
+.sell-options{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;text-align:left}
+.sell-card{border:1.5px solid var(--line);border-radius:16px;padding:20px}
+.sell-card h3{font-size:18px;margin-bottom:6px}.sell-card p{margin:0;color:var(--muted);font-size:14px}
+.result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.result-actions button{width:auto;margin-top:12px}
+.secondary{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:14px 24px;font-weight:700;cursor:pointer}
+.secondary:hover{border-color:var(--green)}
+
+/* ---------- Login ---------- */
+.login-page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#fff}
+.login-aside{background:radial-gradient(60% 60% at 0% 0%,rgba(47,125,246,.9),transparent 70%),radial-gradient(60% 60% at 100% 100%,rgba(255,143,168,.85),transparent 70%),radial-gradient(50% 50% at 90% 10%,rgba(255,179,71,.55),transparent 70%),#7467ff;color:#fff;padding:48px 56px;display:flex;flex-direction:column;justify-content:space-between}
+.login-aside .odido-logo{height:34px;filter:brightness(0) invert(1)}
+.login-aside h2{font-size:clamp(30px,3.4vw,46px);font-weight:800;max-width:14ch;letter-spacing:-.035em}
+.login-aside p{color:rgba(255,255,255,.92);max-width:34ch;margin:14px 0 0}
+.login-wrap{display:grid;place-items:center;padding:40px 24px}
+.login-card{width:100%;max-width:400px}
+.login-card h1{font-size:34px;font-weight:800}
+.login-sub{color:var(--muted);margin:8px 0 26px}
+.login-label{display:block;font-weight:700;font-size:14px;margin:18px 0 8px}
+.login-input{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-size:16px;outline:0;background:#fff}
+.login-input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(106,92,255,.14)}
+.forgot{text-align:right;margin:12px 0 4px;font-size:14px}
+.forgot a,.register a{color:var(--green-d);font-weight:700}
+.login-card button.primary{margin-top:14px}
+.login-message{display:none;background:#fdecea;color:var(--red);border-radius:12px;padding:12px 14px;margin-top:16px;font-size:14px;font-weight:600}
+.register{margin-top:24px;color:var(--muted);font-size:15px}
+.login-back{display:inline-block;margin-bottom:36px;color:var(--muted);font-weight:600;text-decoration:none}
+.login-back:hover{color:var(--ink)}
+
+/* ---------- Dashboard ---------- */
+.dashboard-page{background:var(--paper)}
+.dashboard-header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line);padding:14px var(--pad)}
+.dashboard-user{display:flex;align-items:center;gap:10px;font-size:14px}
+.dashboard-user span{color:var(--muted)}
+.dashboard-user a{margin-left:10px;font-weight:700;text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px}
+.dashboard-user a:hover{border-color:var(--green)}
+.dashboard-main{padding:40px var(--pad) 80px}
+.dashboard-title-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:28px}
+.dashboard-title-row h1{font-size:clamp(32px,4vw,44px);font-weight:800;margin-bottom:6px}
+.dashboard-title-row p{margin:0;color:var(--muted)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.stat-card:first-child{background:linear-gradient(135deg,#2f7df6 0%,#7467ff 62%,#c58af0 100%);border-color:transparent;color:#eef0ff}
+.stat-card:first-child strong{color:#fff}
+.stat-card span{font-size:14px;font-weight:600;display:block}
+.stat-card strong{display:block;font:800 36px var(--display);letter-spacing:-.04em;margin:8px 0 2px;color:var(--ink)}
+.stat-card small{font-size:13px;opacity:.75}
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,.8fr);gap:18px;margin-bottom:18px}
+.dashboard-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;overflow:hidden}
+.card-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.card-heading h2{font-size:21px;font-weight:700}
+.card-heading p{margin:3px 0 0;font-size:14px;color:var(--muted)}
+.text-button{border:0;background:none;color:var(--green-d);font-weight:700;cursor:pointer}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;color:var(--muted);font-size:13px;font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:15px 12px;border-bottom:1px solid #f1effa;white-space:nowrap}
+tbody tr:hover{background:#faf9ff}
+tbody tr:last-child td{border:0}
+.row-btn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:13px}
+.row-btn:hover{border-color:var(--green);background:var(--mint)}
+.status{display:inline-block;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.status-nieuw{background:var(--mint);color:#4c3fdb}
+.status-in-behandeling{background:#fff1c9;color:#7a5200}
+.status-uitbetaald{background:#e4ecff;color:#2c4a8a}
+.order-search{display:flex;gap:8px}
+.order-search input{flex:1;min-width:0;height:46px;border:1.5px solid var(--line);border-radius:999px;padding:0 18px;outline:0}
+.order-search input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(106,92,255,.14)}
+.order-search button{padding:0 22px}
+.order-result{margin-top:16px;border-radius:14px;background:var(--mint);padding:16px;font-size:14px}
+.muted-result{background:var(--paper);color:var(--muted)}
+.error-result{background:#fdecea;color:var(--red)}
+.result-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.result-lines{display:grid;gap:8px}
+.result-lines span{display:flex;justify-content:space-between;color:var(--muted)}
+.result-lines b{color:var(--ink)}
+.all-orders select{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-weight:600}
+
+
+/* ---------- Accessoires ---------- */
+.acc-header{grid-template-columns:1fr auto}
+.acc-head h1{font-size:clamp(32px,4vw,48px);font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;font-weight:600;cursor:pointer;color:var(--ink)}
+.chip:hover{border-color:var(--green)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.acc-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column}
+.acc-photo{aspect-ratio:1;border-radius:14px;overflow:hidden;background:#fff;display:grid;place-items:center}
+.acc-photo img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.acc-card h3{font-size:18px;font-weight:700;margin:14px 0 10px}
+.specs{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.specs li{background:var(--paper);border-radius:999px;padding:3px 11px;font-size:13px;font-weight:600;color:var(--muted)}
+.acc-price{margin-top:auto;font:800 24px var(--display);letter-spacing:-.03em}
+@media(max-width:700px){.acc-grid{grid-template-columns:1fr 1fr;gap:12px}.acc-card{padding:12px}.acc-card h3{font-size:15px}}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1000px){
+  .hero{grid-template-columns:1fr;padding:44px 36px}.quote{justify-self:start;max-width:320px;transform:rotate(1.5deg)}
+  .layout{grid-template-columns:1fr}.sidebar{order:2}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}
+  .worth{grid-template-columns:1fr;gap:28px;margin-top:64px}.worth img{max-height:320px}.login-page{grid-template-columns:1fr}.login-aside{display:none}
+}
+@media(max-width:700px){
+  .factors li{grid-template-columns:1fr;gap:2px}
+  .utility-right,.utility-left span:nth-child(n+2){display:none}
+  .site-header{grid-template-columns:1fr auto;padding:12px 20px}.search{display:none}
+  .nav-bar{gap:22px;overflow-x:auto;white-space:nowrap;font-size:14px}.nav-bar::-webkit-scrollbar{display:none}
+  .nav-bar .sell-link{margin-left:0}
+  .home-main{padding-top:20px}.hero{padding:32px 24px;border-radius:22px}.hero p{font-size:16px}
+  .model-section{padding-top:44px}.model-grid{grid-template-columns:1fr 1fr;gap:12px}.model-card{padding:14px}.model-card h3{font-size:16px}.phone-photo{height:150px}.phone-photo img{max-height:146px}
+  .panel{padding:24px 18px;min-height:0}.sell-options{grid-template-columns:1fr}
+  .dashboard-title-row{flex-direction:column;align-items:flex-start}.dashboard-primary{width:100%}
+  .dashboard-user span{display:none}.dashboard-card{padding:18px}.stat-card{padding:16px}.stat-card strong{font-size:28px}
+  .order-search{flex-direction:column}.order-search button{height:46px}.all-orders .card-heading{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="dashboard-page">
+<div class="dashboard-shell">
+  <header class="dashboard-header">
+    <a class="dashboard-logo" href="index.html"><img class="odido-logo" src="images/odido-logo.svg" alt="Odido"></a>
+    <div class="dashboard-user"><span>Ingelogd als</span><strong>CandrPhones</strong><a href="index.html">Uitloggen</a></div>
+  </header>
+
+  <main class="dashboard-main">
+    <div class="dashboard-title-row">
+      <div><h1>Dashboard</h1><p>Beheer aanvragen, ordernummers en inruilen vanuit één overzicht.</p></div>
+      <a class="dashboard-primary" href="index.html">Nieuwe aanvraag</a>
+    </div>
+
+    <section class="stats-grid">
+      <div class="stat-card"><span>Openstaande aanvragen</span><strong id="openCount">3</strong><small>Wachten op verwerking</small></div>
+      <div class="stat-card"><span>Deze maand</span><strong id="monthCount">12</strong><small>Nieuwe aanvragen</small></div>
+      <div class="stat-card"><span>Uitbetaald</span><strong id="paidCount">€ 2.840</strong><small>Deze maand</small></div>
+      <div class="stat-card"><span>Orders</span><strong id="orderCount">18</strong><small>Alle ordernummers</small></div>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="dashboard-card applications-card">
+        <div class="card-heading"><div><h2>Aanvragen</h2><p>Recente inruilaanvragen</p></div><button class="text-button" id="showAllBtn">Alles bekijken</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Ordernummer</th><th>Model</th><th>Klant</th><th>Bedrag</th><th>Status</th><th></th></tr></thead><tbody id="applicationTable"></tbody></table></div>
+      </div>
+
+      <div class="dashboard-card order-card">
+        <div class="card-heading"><div><h2>Ordernummer zoeken</h2><p>Bekijk snel de status van een aanvraag.</p></div></div>
+        <div class="order-search"><input id="orderSearch" placeholder="Bijv. ODI-1024" autocomplete="off"><button id="searchOrder">Zoeken</button></div>
+        <div id="orderResult" class="order-result muted-result">Voer een ordernummer in om een aanvraag te zoeken.</div>
+      </div>
+    </section>
+
+    <section class="dashboard-card all-orders" id="allOrdersSection">
+      <div class="card-heading"><div><h2>Alle orders</h2><p>Overzicht van alle inruilorders.</p></div><select id="statusFilter"><option value="all">Alle statussen</option><option value="Nieuw">Nieuw</option><option value="In behandeling">In behandeling</option><option value="Uitbetaald">Uitbetaald</option></select></div>
+      <div class="table-wrap"><table><thead><tr><th>Ordernummer</th><th>Datum</th><th>Model</th><th>Opslag</th><th>Bedrag</th><th>Status</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+    </section>
+  </main>
+</div>
+<script>
+const applications = [
+ {order:'ODI-1024',model:'iPhone 15 Pro',customer:'Anoniem',amount:295,date:'20 sep 2026',storage:'256 GB',status:'Nieuw'},
+ {order:'ODI-1023',model:'iPhone 14',customer:'Anoniem',amount:165,date:'20 sep 2026',storage:'128 GB',status:'In behandeling'},
+ {order:'ODI-1022',model:'iPhone 13',customer:'Anoniem',amount:125,date:'19 sep 2026',storage:'128 GB',status:'Uitbetaald'},
+ {order:'ODI-1021',model:'iPhone 12',customer:'Anoniem',amount:100,date:'18 sep 2026',storage:'64 GB',status:'In behandeling'},
+ {order:'ODI-1020',model:'iPhone 11 Pro',customer:'Anoniem',amount:110,date:'17 sep 2026',storage:'256 GB',status:'Uitbetaald'}
+];
+const saved = JSON.parse(localStorage.getItem('odidoApplications') || '[]');
+const data = [...saved, ...applications.filter(a=>!saved.some(s=>s.order===a.order))];
+function badge(status){return '<span class="status status-'+status.toLowerCase().replaceAll(' ','-')+'">'+status+'</span>'}
+function renderRecent(){document.getElementById('applicationTable').innerHTML=data.slice(0,5).map(a=>`<tr><td><b>${a.order}</b></td><td>${a.model}</td><td>${a.customer}</td><td>€ ${a.amount}</td><td>${badge(a.status)}</td><td><button class="row-btn" onclick="findOrder('${a.order}')">Bekijk</button></td></tr>`).join('')}
+function renderOrders(){const filter=document.getElementById('statusFilter').value;document.getElementById('ordersTable').innerHTML=data.filter(a=>filter==='all'||a.status===filter).map(a=>`<tr><td><b>${a.order}</b></td><td>${a.date}</td><td>${a.model}</td><td>${a.storage}</td><td>€ ${a.amount}</td><td>${badge(a.status)}</td></tr>`).join('')}
+function findOrder(value){const q=value.trim().toUpperCase();const a=data.find(x=>x.order.toUpperCase()===q);const box=document.getElementById('orderResult');if(!a){box.className='order-result error-result';box.innerHTML='<strong>Niet gevonden</strong><br>Er is geen aanvraag met dit ordernummer gevonden.';return}box.className='order-result';box.innerHTML=`<div class="result-top"><strong>${a.order}</strong>${badge(a.status)}</div><div class="result-lines"><span>Model <b>${a.model}</b></span><span>Opslag <b>${a.storage}</b></span><span>Bedrag <b>€ ${a.amount}</b></span><span>Datum <b>${a.date}</b></span></div>`}
+document.getElementById('searchOrder').onclick=()=>findOrder(document.getElementById('orderSearch').value);document.getElementById('orderSearch').addEventListener('keydown',e=>{if(e.key==='Enter')findOrder(e.target.value)});document.getElementById('statusFilter').onchange=renderOrders;document.getElementById('showAllBtn').onclick=()=>document.getElementById('allOrdersSection').scrollIntoView({behavior:'smooth'});renderRecent();renderOrders();
+</script>
+</body></html>
